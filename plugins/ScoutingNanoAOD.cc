@@ -1524,34 +1524,36 @@ void ScoutingNanoAOD::analyze(const edm::Event& iEvent, const edm::EventSetup& i
   Mjj = 0;
   MT = 0;
 
-  if(saveConst && n_fatjet > 1){ //only first fatjet: > 0, first two fatjets: > 1
+  if(n_fatjet > 1){ //only first fatjet: > 0, first two fatjets: > 1
     auto &leadingFatJet = ak08_jets[0];
     auto &secondFatJet = ak08_jets[1];
     //cout << "number of FatJets:" << endl << n_fatjet << endl;
     //cout << "leading Fatjet pt:" << endl << leadingFatJet.pt() << endl;
     //cout << "number of constituents:" << endl << leadingFatJet.constituents().size() << endl;
-    for (auto &c: leadingFatJet.constituents()){
-      if (PFcand_pt[c.user_index()] > 0.5){
-	FatJet1Const_pt.push_back(PFcand_pt[c.user_index()]);
-	FatJet1Const_eta.push_back(PFcand_eta[c.user_index()]);
-	FatJet1Const_phi.push_back(PFcand_phi[c.user_index()]);
-	FatJet1Const_mass.push_back(PFcand_m[c.user_index()]);
-	FatJet1Const_pdgID.push_back(PFcand_pdgid[c.user_index()]);
-	FatJet1Const_charge.push_back(PFcand_q[c.user_index()]);  
-      }
-    }
+    
+    if(saveConst){
+	for (auto &c: leadingFatJet.constituents()){
+	  if (PFcand_pt[c.user_index()] > 0.5){
+	    FatJet1Const_pt.push_back(PFcand_pt[c.user_index()]);
+	    FatJet1Const_eta.push_back(PFcand_eta[c.user_index()]);
+	    FatJet1Const_phi.push_back(PFcand_phi[c.user_index()]);
+	    FatJet1Const_mass.push_back(PFcand_m[c.user_index()]);
+	    FatJet1Const_pdgID.push_back(PFcand_pdgid[c.user_index()]);
+	    FatJet1Const_charge.push_back(PFcand_q[c.user_index()]);  
+	  }
+	}
 
-    for (auto &c: secondFatJet.constituents()){
-      if (PFcand_pt[c.user_index()] > 0.5){
-	FatJet2Const_pt.push_back(PFcand_pt[c.user_index()]);
-	FatJet2Const_eta.push_back(PFcand_eta[c.user_index()]);
-	FatJet2Const_phi.push_back(PFcand_phi[c.user_index()]);
-	FatJet2Const_mass.push_back(PFcand_m[c.user_index()]);
-	FatJet2Const_pdgID.push_back(PFcand_pdgid[c.user_index()]);
-	FatJet2Const_charge.push_back(PFcand_q[c.user_index()]);  
+	for (auto &c: secondFatJet.constituents()){
+	  if (PFcand_pt[c.user_index()] > 0.5){
+	    FatJet2Const_pt.push_back(PFcand_pt[c.user_index()]);
+	    FatJet2Const_eta.push_back(PFcand_eta[c.user_index()]);
+	    FatJet2Const_phi.push_back(PFcand_phi[c.user_index()]);
+	    FatJet2Const_mass.push_back(PFcand_m[c.user_index()]);
+	    FatJet2Const_pdgID.push_back(PFcand_pdgid[c.user_index()]);
+	    FatJet2Const_charge.push_back(PFcand_q[c.user_index()]);  
+	  }
+	}
       }
-    }
-
     //
     //Dijet mass and transverse mass
     //
